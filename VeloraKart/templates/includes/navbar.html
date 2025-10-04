@@ -1,81 +1,134 @@
 {% load static %}
 
 <style>
-    /* General styles for a professional feel */
+    /* ======= General Navbar Styling ======= */
     .header-top {
-        background-color: #f8f9fa; /* Light grey background */
+        background-color: #f8f9fa;
         font-size: 0.9rem;
-    }
-    .header-main {
-        background-color: #ffffff; /* White background for the main section */
         border-bottom: 1px solid #e9ecef;
     }
+
+    .header-main {
+        background-color: #fff;
+        border-bottom: 1px solid #dee2e6;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
     .logo {
-        height: 40px; /* Standardized logo size */
+        height: 45px;
+        transition: transform 0.3s ease;
     }
+
+    .logo:hover {
+        transform: scale(1.05);
+    }
+
+    /* ======= Search Bar ======= */
     .search-input {
-        border-radius: 50px; /* Pill-shaped search bar */
+        border-radius: 50px 0 0 50px;
         border: 1px solid #ced4da;
+        padding: 0.6rem 1rem;
     }
+
     .btn-search {
-        border-radius: 0 50px 50px 0; /* Matches the search bar */
+        border-radius: 0 50px 50px 0;
+        background-color: #007bff;
+        border: none;
+        color: #fff;
+        transition: background-color 0.3s ease;
     }
+
+    .btn-search:hover {
+        background-color: #0056b3;
+    }
+
+    /* ======= Navigation & Buttons ======= */
     .nav-user-items a {
-        color: #495057; /* Darker text for user links */
+        color: #495057;
+        text-decoration: none;
+        margin-right: 15px;
+        font-weight: 500;
         transition: color 0.3s ease;
     }
+
     .nav-user-items a:hover {
-        color: #007bff; /* Highlight on hover */
+        color: #007bff;
     }
+
+    .btn-outline-primary {
+        border-radius: 30px;
+        padding: 6px 18px;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+    }
+
+    .btn-outline-primary:hover {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    .dropdown-menu {
+        font-size: 0.9rem;
+    }
+
     .user-greeting {
-        font-weight: 500;
+        font-weight: 600;
         color: #343a40;
     }
-    .navbar-toggler {
-        border: none;
+
+    .auth-links a {
+        color: #007bff;
+        font-weight: 500;
+        margin-left: 8px;
+    }
+
+    .auth-links a:hover {
+        text-decoration: underline;
     }
 </style>
 
 <header>
+    <!-- ======= Header Top Bar ======= -->
     <div class="header-top py-2 d-none d-md-block">
         <div class="container d-flex justify-content-between">
             <ul class="list-unstyled d-flex mb-0">
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link text-dark">English</a>
+                <li class="nav-item mr-3">
+                    <a href="#" class="nav-link text-dark p-0">English</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a href="#" class="nav-link text-dark" data-toggle="dropdown">
-                        USD
-                    </a>
-                    <ul class="dropdown-menu small">
-                        <li><a class="dropdown-item" href="#">EUR</a></li>
-                        <li><a class="dropdown-item" href="#">AED</a></li>
-                        <li><a class="dropdown-item" href="#">RUBL</a></li>
-                    </ul>
+                    <a href="#" class="nav-link text-dark dropdown-toggle p-0" data-toggle="dropdown">USD</a>
+                    <div class="dropdown-menu small">
+                        <a class="dropdown-item" href="#">EUR</a>
+                        <a class="dropdown-item" href="#">INR</a>
+                        <a class="dropdown-item" href="#">AED</a>
+                    </div>
                 </li>
             </ul>
             <ul class="list-unstyled d-flex mb-0">
-                <li><a href="#" class="nav-link text-dark"><i class="fa fa-envelope"></i> Email</a></li>
-                <li><a href="#" class="nav-link text-dark"><i class="fa fa-phone"></i> Call us</a></li>
+                <li><a href="#" class="nav-link text-dark p-0 mr-3"><i class="fa fa-envelope"></i> Email</a></li>
+                <li><a href="#" class="nav-link text-dark p-0"><i class="fa fa-phone"></i> Call us</a></li>
             </ul>
         </div>
     </div>
 
-    <div class="header-main py-4">
+    <!-- ======= Main Header ======= -->
+    <div class="header-main py-3">
         <div class="container">
             <div class="row align-items-center">
+                <!-- Logo -->
                 <div class="col-lg-2 col-md-3 col-6">
-                    <a href="{% url 'home' %}" class="d-flex align-items-center">
-                        <img class="logo" src="{% static './images/logo5.png' %}" alt="Logo">
+                    <a href="{% url 'home' %}">
+                        <img class="logo" src="{% static 'images/logo5.png' %}" alt="Logo">
                     </a>
                 </div>
 
+                <!-- Search Bar -->
                 <div class="col-lg-5 col-md-6 col-12 order-lg-2 order-3 mt-3 mt-md-0">
                     <form action="{% url 'search' %}" class="d-flex" method="GET">
                         <div class="input-group">
                             <input type="text" class="form-control search-input" placeholder="Search products..." name="keyword">
                             <div class="input-group-append">
-                                <button class="btn btn-primary btn-search" type="submit">
+                                <button class="btn btn-search" type="submit">
                                     <i class="fa fa-search"></i>
                                 </button>
                             </div>
@@ -83,13 +136,15 @@
                     </form>
                 </div>
 
+                <!-- User Navigation -->
                 <div class="col-lg-5 col-md-3 col-6 d-flex justify-content-end order-lg-3 order-2">
-                    <div class="d-flex nav-user-items">
+                    <div class="d-flex align-items-center nav-user-items">
                         <a href="{% url 'store' %}" class="btn btn-outline-primary mr-2">Store</a>
 
-                        <div class="dropdown">
-                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-bars mr-1"></i> All category
+                        <!-- Category Dropdown -->
+                        <div class="dropdown mr-3">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-bars mr-1"></i> Categories
                             </button>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="{% url 'store' %}">All Products</a>
@@ -98,16 +153,19 @@
                                 {% endfor %}
                             </div>
                         </div>
-                        
-                        <div class="ml-3 d-none d-sm-block">
-                            {% if user.id is None %}
+
+                        <!-- Authentication Section -->
+                        <div class="ml-2 text-right">
+                            {% if user.is_authenticated %}
                                 <div class="widget-header">
-                                    <small class="text-muted">Welcome guest!</small><br>
-                                    <a href="{% url 'login' %}">Sign in</a> | <a href="{% url 'register' %}">Register</a>
+                                    <small class="text-muted">Welcome, <span class="user-greeting">{{ user.first_name }}</span></small><br>
+                                    <a href="{% url 'logout' %}" class="text-danger small">Logout</a>
                                 </div>
                             {% else %}
-                                <div class="widget-header">
-                                    <small class="text-muted">Welcome <span class="user-greeting">{{ user.first_name }}</span>!</small>
+                                <div class="widget-header auth-links">
+                                    <small class="text-muted">Welcome Guest!</small><br>
+                                    <a href="">Login</a> | 
+                                    <a href="">Register</a>
                                 </div>
                             {% endif %}
                         </div>
