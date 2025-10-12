@@ -168,6 +168,14 @@
                                     <a href="">Register</a>
                                 </div>
                             {% endif %}
+                            <a href="{% url 'cart' %}" class="widget-header pl-2 ml-2">
+                                <div class="icontext">
+                                    <div class="icon">
+                                        <i class="fa fa-shopping-cart" style="font-size: 1.5rem;"></i>
+                                    </div>
+                                    <span class="badge notify">{{ cart_count|default:"0" }}</span>
+                                </div>
+                            </a>
                         </div>
                     </div>
                 </div>
