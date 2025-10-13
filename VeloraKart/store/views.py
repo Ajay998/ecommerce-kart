@@ -11,8 +11,8 @@ def store(request, category_slug=None):
     products = None
     if category_slug != None:
         categories = get_object_or_404(Category, slug=category_slug)
-        products = Product.objects.filter(category=categories, is_available=True)
-        paginator = Paginator(products, 6)  # Show 6 products per page
+        products = Product.objects.filter(category=categories, is_available=True).order_by('id')
+        paginator = Paginator(products, 6)  # Show 1 product per page
         page = request.GET.get('page')
         try:
             paged_products = paginator.page(page)
@@ -24,7 +24,7 @@ def store(request, category_slug=None):
         product_count = products.count()
         # Logic to filter products by category can be added here
     else:
-        products = Product.objects.all().filter(is_available=True)
+        products = Product.objects.all().filter(is_available=True).order_by('id')
         paginator = Paginator(products, 6)  # Show 6 products per page
         page = request.GET.get('page')
         try:
