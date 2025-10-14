@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="register-section d-flex justify-content-center" style="background-color: #f7f9fc; padding: 60px 0;">  <div class="container">
+    <div class="row justify-content-center align-items-start shadow-lg rounded overflow-hidden mx-auto" style="max-width: 900px; background: #fff;">
+
+      <!-- Left side: Image / Branding -->
+      <div class="col-md-6 d-none d-md-flex" style="
+           background: url('{% static "images/register-banner.jpg" %}') no-repeat center center;
+           background-size: cover;
+           min-height: 500px; /* ensures image has height */
+      ">
+      </div>
+
+      <!-- Right side: Form -->
+      <div class="col-md-6 p-4">
+        <div class="w-100">
+          {% include 'includes/alerts.html' %}
+          <h3 class="mb-4" style="font-weight:600; color:#333;">Create Account</h3>
+
+          <form action="{% url 'register' %}" method="POST">
+            {% csrf_token %}
+
+            <div class="form-row">
+              <div class="col form-group">
+                <label>First Name</label>
+                {{ form.first_name }}
+              </div>
+              <div class="col form-group">
+                <label>Last Name</label>
+                {{ form.last_name }}
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label>Email Address</label>
+                {{ form.email }}
+              </div>
+              <div class="form-group col-md-6">
+                <label>Phone Number</label>
+                {{ form.phone_number }}
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label>Create Password</label>
+                {{ form.password }}
+              </div>
+              <div class="form-group col-md-6">
+                <label>Confirm Password</label>
+                {{ form.confirm_password }}
+              </div>
+            </div>
+
+            {% if form.errors %}
+            <div class="alert alert-danger mt-3" style="font-size: 0.9rem;">
+              <ul class="mb-0">
+                {% for field in form %}
+                  {% for error in field.errors %}
+                    <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+                  {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                  <li>{{ error }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+            {% endif %}
+
+            <div class="form-group mt-4">
+              <button type="submit" class="btn btn-primary btn-block py-2" style="border-radius:8px; font-weight:600;">
+                Register
+              </button>
+            </div>
+          </form>
+
+          <p class="text-center mt-3">
+            {% comment %} Already have an account? <a href="{% url 'login' %}">Log In</a> {% endcomment %}
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Center form inputs and style */
+  input[type="text"], input[type="email"], input[type="password"], input[type="tel"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0,123,255,0.2);
+    outline: none;
+  }
+
+  label {
+    color: #495057;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  .btn-primary:hover {
+    background-color: #0069d9;
+    border-color: #0062cc;
+  }
+</style>
+{% endblock %}

@@ -159,13 +159,13 @@
                             {% if user.is_authenticated %}
                                 <div class="widget-header">
                                     <small class="text-muted">Welcome, <span class="user-greeting">{{ user.first_name }}</span></small><br>
-                                    <a href="{% url 'logout' %}" class="text-danger small">Logout</a>
+                                    {% comment %} <a href="{% url 'logout' %}" class="text-danger small">Logout</a> {% endcomment %}
                                 </div>
                             {% else %}
                                 <div class="widget-header auth-links">
                                     <small class="text-muted">Welcome Guest!</small><br>
                                     <a href="">Login</a> | 
-                                    <a href="">Register</a>
+                                    <a href="{% url 'register' %}">Register</a>
                                 </div>
                             {% endif %}
                             <a href="{% url 'cart' %}" class="widget-header pl-2 ml-2">
