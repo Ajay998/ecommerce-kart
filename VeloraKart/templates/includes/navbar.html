@@ -159,12 +159,13 @@
                             {% if user.is_authenticated %}
                                 <div class="widget-header">
                                     <small class="text-muted">Welcome, <span class="user-greeting">{{ user.first_name }}</span></small><br>
+                                    <a href="{% url 'logout' %}" class="text-danger small">Logout</a>
                                 </div>
                             {% else %}
                                 <div class="widget-header auth-links">
                                     <small class="text-muted">Welcome Guest!</small><br>
-                                    <a href="{% url 'login' %}">Login</a> | 
-                                    <a href="{% url 'register' %}">Register</a>
+                                    <a href="">Login</a> | 
+                                    <a href="">Register</a>
                                 </div>
                             {% endif %}
                             <a href="{% url 'cart' %}" class="widget-header pl-2 ml-2">
@@ -172,15 +173,9 @@
                                     <div class="icon">
                                         <i class="fa fa-shopping-cart" style="font-size: 1.5rem;"></i>
                                     </div>
-                                    <span class="badge notify">{{ cart_count|default:"0" }}</span>
+                                    <span class="badge notify">{{cart_count}}</span>
                                 </div>
                             </a>
-                        </div>
-                        <!-- Logout Svg button -->
-                        <div class="ml-2 text-right">
-                            {% if user.is_authenticated %}
-                                <a href="{% url 'logout' %}" class="btn btn-outline-danger btn-sm">Logout</a>
-                            {% endif %}
                         </div>
                     </div>
                 </div>
