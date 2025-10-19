@@ -164,8 +164,8 @@
                             {% else %}
                                 <div class="widget-header auth-links">
                                     <small class="text-muted">Welcome Guest!</small><br>
-                                    <a href="">Login</a> | 
-                                    <a href="">Register</a>
+                                    <a href="{% url 'login' %}">Login</a> | 
+                                    <a href="{% url 'register' %}">Register</a>
                                 </div>
                             {% endif %}
                             <a href="{% url 'cart' %}" class="widget-header pl-2 ml-2">
