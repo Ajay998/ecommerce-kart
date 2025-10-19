@@ -168,6 +168,7 @@
                                     <a href="{% url 'register' %}">Register</a>
                                 </div>
                             {% endif %}
+                            {% if user.is_authenticated %}
                             <a href="{% url 'cart' %}" class="widget-header pl-2 ml-2">
                                 <div class="icontext">
                                     <div class="icon">
@@ -176,6 +177,7 @@
                                     <span class="badge notify">{{cart_count}}</span>
                                 </div>
                             </a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
