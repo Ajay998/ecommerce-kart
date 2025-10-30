@@ -1,187 +1,650 @@
 {% load static %}
 
 <style>
-    /* ======= General Navbar Styling ======= */
-    .header-top {
-        background-color: #f8f9fa;
-        font-size: 0.9rem;
-        border-bottom: 1px solid #e9ecef;
+    /* ======= CSS Variables ======= */
+    :root {
+        --primary-color: #2563eb;
+        --primary-hover: #1d4ed8;
+        --dark-color: #0f172a;
+        --light-bg: #f8fafc;
+        --border-color: #e2e8f0;
+        --text-primary: #1e293b;
+        --text-secondary: #64748b;
+        --danger-color: #ef4444;
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        --transition: all 0.3s ease;
     }
 
-    .header-main {
-        background-color: #fff;
-        border-bottom: 1px solid #dee2e6;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    /* ======= Reset ======= */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
     }
 
-    .logo {
-        height: 45px;
-        transition: transform 0.3s ease;
+    /* ======= Top Bar ======= */
+    .topbar {
+        background: linear-gradient(135deg, var(--dark-color) 0%, #1e293b 100%);
+        color: #fff;
+        font-size: 0.813rem;
+        padding: 0.5rem 0;
     }
 
-    .logo:hover {
+    .topbar-link {
+        color: rgba(255, 255, 255, 0.9);
+        text-decoration: none;
+        padding: 0.25rem 0.75rem;
+        border-radius: 0.375rem;
+        display: inline-flex;
+        align-items: center;
+        transition: var(--transition);
+    }
+
+    .topbar-link:hover {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .topbar-link i {
+        margin-right: 0.375rem;
+    }
+
+    /* ======= Main Header ======= */
+    .main-header {
+        background: #fff;
+        box-shadow: var(--shadow-md);
+        position: sticky;
+        top: 0;
+        z-index: 999;
+    }
+
+    .header-container {
+        max-width: 1320px;
+        margin: 0 auto;
+        padding: 1rem 1.5rem;
+    }
+
+    /* ======= Logo ======= */
+    .brand-logo-text {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        transition: var(--transition);
+    }
+
+    .brand-logo-text:hover {
         transform: scale(1.05);
     }
 
-    /* ======= Search Bar ======= */
-    .search-input {
-        border-radius: 50px 0 0 50px;
-        border: 1px solid #ced4da;
-        padding: 0.6rem 1rem;
+    .logo-icon {
+        font-size: 2rem;
     }
 
-    .btn-search {
-        border-radius: 0 50px 50px 0;
-        background-color: #007bff;
+    .logo-text {
+        font-size: 1.75rem;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+    }
+
+    .logo-velora {
+        background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .logo-kart {
+        color: #1e293b;
+        font-weight: 900;
+    }
+
+    /* ======= Search Bar - FIXED ======= */
+    .search-wrapper {
+        max-width: 600px;
+        width: 100%;
+    }
+
+    .search-form {
+        display: flex;
+        align-items: stretch;
+        background: var(--light-bg);
+        border: 2px solid var(--border-color);
+        border-radius: 50px;
+        overflow: hidden;
+        transition: var(--transition);
+        height: 46px;
+    }
+
+    .search-form:focus-within {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+        background: #fff;
+    }
+
+    .search-input {
+        flex: 1;
+        border: none;
+        background: transparent;
+        padding: 0 1.25rem;
+        font-size: 0.938rem;
+        color: var(--text-primary);
+        outline: none;
+    }
+
+    .search-input::placeholder {
+        color: var(--text-secondary);
+    }
+
+    .search-button {
+        background: var(--primary-color);
         border: none;
         color: #fff;
-        transition: background-color 0.3s ease;
+        padding: 0 1.75rem;
+        cursor: pointer;
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
     }
 
-    .btn-search:hover {
-        background-color: #0056b3;
+    .search-button:hover {
+        background: var(--primary-hover);
     }
 
-    /* ======= Navigation & Buttons ======= */
-    .nav-user-items a {
-        color: #495057;
+    .search-button i {
+        font-size: 1.125rem;
+    }
+
+    /* ======= Navigation ======= */
+    .user-section {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .nav-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.625rem 1rem;
+        border: 2px solid var(--primary-color);
+        background: transparent;
+        color: var(--primary-color);
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 0.875rem;
         text-decoration: none;
-        margin-right: 15px;
-        font-weight: 500;
-        transition: color 0.3s ease;
+        transition: var(--transition);
+        height: 38px;
     }
 
-    .nav-user-items a:hover {
-        color: #007bff;
-    }
-
-    .btn-outline-primary {
-        border-radius: 30px;
-        padding: 6px 18px;
-        font-size: 0.9rem;
-        transition: all 0.3s ease;
-    }
-
-    .btn-outline-primary:hover {
-        background-color: #007bff;
+    .nav-btn:hover {
+        background: var(--primary-color);
         color: #fff;
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
     }
 
-    .dropdown-menu {
-        font-size: 0.9rem;
+    /* ======= Category Dropdown ======= */
+    .category-dropdown {
+        position: relative;
+    }
+
+    .category-trigger {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.625rem 1rem;
+        background: var(--primary-color);
+        color: #fff;
+        border: none;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 0.875rem;
+        cursor: pointer;
+        height: 38px;
+        transition: var(--transition);
+    }
+
+    .category-trigger:hover {
+        background: var(--primary-hover);
+    }
+
+    .category-menu {
+        position: absolute;
+        top: calc(100% + 0.5rem);
+        right: 0;
+        background: #fff;
+        border-radius: 0.75rem;
+        box-shadow: var(--shadow-lg);
+        min-width: 220px;
+        display: none;
+        z-index: 1000;
+    }
+
+    .category-dropdown:hover .category-menu {
+        display: block;
+    }
+
+    .category-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.875rem 1.25rem;
+        color: var(--text-primary);
+        text-decoration: none;
+        transition: var(--transition);
+        border-left: 3px solid transparent;
+    }
+
+    .category-item:hover {
+        background: var(--light-bg);
+        border-left-color: var(--primary-color);
+        color: var(--primary-color);
+    }
+
+    /* ======= User Widget ======= */
+    .user-widget {
+        position: relative;
+    }
+
+    .user-dropdown-trigger {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        background: var(--light-bg);
+        border: 2px solid var(--border-color);
+        border-radius: 50px;
+        cursor: pointer;
+        height: 38px;
+        text-decoration: none;
+        transition: var(--transition);
+    }
+
+    .user-dropdown-trigger:hover {
+        border-color: var(--primary-color);
+        background: #fff;
+    }
+
+    .user-avatar {
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 0.75rem;
+    }
+
+    .user-info {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.2;
     }
 
     .user-greeting {
-        font-weight: 600;
-        color: #343a40;
-    }
-
-    .auth-links a {
-        color: #007bff;
+        font-size: 0.625rem;
+        color: var(--text-secondary);
         font-weight: 500;
-        margin-left: 8px;
+        text-transform: uppercase;
     }
 
-    .auth-links a:hover {
-        text-decoration: underline;
+    .user-name {
+        font-weight: 700;
+        color: var(--text-primary);
+        font-size: 0.813rem;
+    }
+
+    .user-dropdown-menu {
+        position: absolute;
+        top: calc(100% + 0.5rem);
+        right: 0;
+        background: #fff;
+        border-radius: 0.75rem;
+        box-shadow: var(--shadow-lg);
+        min-width: 220px;
+        display: none;
+        z-index: 1000;
+    }
+
+    .user-widget:hover .user-dropdown-menu {
+        display: block;
+    }
+
+    .user-dropdown-header {
+        padding: 1rem 1.25rem;
+        background: var(--light-bg);
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .user-dropdown-title {
+        font-weight: 700;
+        color: var(--text-primary);
+        font-size: 0.938rem;
+    }
+
+    .user-dropdown-email {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        margin-top: 0.25rem;
+    }
+
+    .user-dropdown-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.875rem 1.25rem;
+        color: var(--text-primary);
+        text-decoration: none;
+        transition: var(--transition);
+        border-left: 3px solid transparent;
+    }
+
+    .user-dropdown-item:hover {
+        background: var(--light-bg);
+        border-left-color: var(--primary-color);
+        color: var(--primary-color);
+    }
+
+    .user-dropdown-item.logout {
+        color: var(--danger-color);
+    }
+
+    .user-dropdown-item.logout:hover {
+        background: rgba(239, 68, 68, 0.1);
+        border-left-color: var(--danger-color);
+    }
+
+    .user-dropdown-divider {
+        height: 1px;
+        background: var(--border-color);
+        margin: 0.5rem 0;
+    }
+
+    /* ======= Auth Links ======= */
+    .auth-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.625rem 1rem;
+        border: 2px solid var(--primary-color);
+        background: transparent;
+        color: var(--primary-color);
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 0.875rem;
+        text-decoration: none;
+        height: 38px;
+        transition: var(--transition);
+    }
+
+    .auth-link:hover {
+        background: var(--primary-color);
+        color: #fff;
+        transform: translateY(-2px);
+    }
+
+    .auth-link.primary {
+        background: var(--primary-color);
+        color: #fff;
+    }
+
+    .auth-link.primary:hover {
+        background: var(--primary-hover);
+    }
+
+    /* ======= Cart ======= */
+    .cart-widget {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.625rem 1rem;
+        background: var(--light-bg);
+        border: 2px solid var(--border-color);
+        border-radius: 50px;
+        text-decoration: none;
+        height: 38px;
+        transition: var(--transition);
+    }
+
+    .cart-widget:hover {
+        border-color: var(--primary-color);
+        background: #fff;
+        transform: translateY(-2px);
+    }
+
+    .cart-icon {
+        font-size: 1.25rem;
+        color: var(--text-primary);
+    }
+
+    .cart-widget:hover .cart-icon {
+        color: var(--primary-color);
+    }
+
+    .cart-badge {
+        position: absolute;
+        top: -0.375rem;
+        right: -0.375rem;
+        background: var(--danger-color);
+        color: #fff;
+        min-width: 20px;
+        height: 20px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.688rem;
+        font-weight: 700;
+        padding: 0 0.375rem;
+    }
+
+    .divider {
+        width: 1px;
+        height: 24px;
+        background: var(--border-color);
+    }
+
+    /* ======= Responsive ======= */
+    @media (max-width: 1024px) {
+        .user-info {
+            display: none;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .topbar {
+            display: none;
+        }
+
+        .search-wrapper {
+            order: 3;
+            margin-top: 1rem;
+        }
+
+        .nav-btn span,
+        .user-dropdown-icon {
+            display: none;
+        }
     }
 </style>
 
-<header>
-    <!-- ======= Header Top Bar ======= -->
-    <div class="header-top py-2 d-none d-md-block">
-        <div class="container d-flex justify-content-between">
-            <ul class="list-unstyled d-flex mb-0">
-                <li class="nav-item mr-3">
-                    <a href="#" class="nav-link text-dark p-0">English</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link text-dark dropdown-toggle p-0" data-toggle="dropdown">USD</a>
-                    <div class="dropdown-menu small">
-                        <a class="dropdown-item" href="#">EUR</a>
-                        <a class="dropdown-item" href="#">INR</a>
-                        <a class="dropdown-item" href="#">AED</a>
-                    </div>
-                </li>
-            </ul>
-            <ul class="list-unstyled d-flex mb-0">
-                <li><a href="#" class="nav-link text-dark p-0 mr-3"><i class="fa fa-envelope"></i> Email</a></li>
-                <li><a href="#" class="nav-link text-dark p-0"><i class="fa fa-phone"></i> Call us</a></li>
-            </ul>
+<header class="site-header">
+    <!-- Top Bar -->
+    <div class="topbar">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <a href="#" class="topbar-link">
+                        <i class="fa fa-globe"></i>
+                        <span>English</span>
+                    </a>
+                    <a href="#" class="topbar-link ml-3">
+                        <i class="fa fa-dollar-sign"></i>
+                        <span>USD</span>
+                    </a>
+                </div>
+                <div class="col-md-6 text-right d-none d-md-block">
+                    <a href="mailto:support@velorakart.com" class="topbar-link">
+                        <i class="fa fa-envelope"></i>
+                        <span>support@velorakart.com</span>
+                    </a>
+                    <a href="tel:+1234567890" class="topbar-link ml-3">
+                        <i class="fa fa-phone"></i>
+                        <span>+1 (234) 567-890</span>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- ======= Main Header ======= -->
-    <div class="header-main py-3">
-        <div class="container">
+    <!-- Main Header -->
+    <div class="main-header">
+        <div class="header-container">
             <div class="row align-items-center">
                 <!-- Logo -->
                 <div class="col-lg-2 col-md-3 col-6">
                     <a href="{% url 'home' %}">
-                        <img class="logo" src="{% static 'images/logo10.png' %}" alt="Logo">
+                        <div class="brand-logo-text">
+                            <span class="logo-icon">🛒</span>
+                            <span class="logo-text">
+                                <span class="logo-velora">Velora</span><span class="logo-kart">Kart</span>
+                            </span>
+                        </div>
                     </a>
                 </div>
 
                 <!-- Search Bar -->
-                <div class="col-lg-5 col-md-6 col-12 order-lg-2 order-3 mt-3 mt-md-0">
-                    <form action="{% url 'search' %}" class="d-flex" method="GET">
-                        <div class="input-group">
-                            <input type="text" class="form-control search-input" placeholder="Search products..." name="keyword">
-                            <div class="input-group-append">
-                                <button class="btn btn-search" type="submit">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                <div class="col-lg-5 col-md-6 col-12 order-lg-2 order-3">
+                    <div class="search-wrapper">
+                        <form action="{% url 'search' %}" method="GET" class="search-form">
+                            <input 
+                                type="text" 
+                                name="keyword" 
+                                class="search-input" 
+                                placeholder="Search for products, brands and more..."
+                            >
+                            <button type="submit" class="search-button">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </form>
+                    </div>
                 </div>
 
-                <!-- User Navigation -->
-                <div class="col-lg-5 col-md-3 col-6 d-flex justify-content-end order-lg-3 order-2">
-                    <div class="d-flex align-items-center nav-user-items">
-                        <a href="{% url 'store' %}" class="btn btn-outline-primary mr-2">Store</a>
+                <!-- Navigation -->
+                <div class="col-lg-5 col-md-3 col-6 order-lg-3 order-2">
+                    <div class="user-section">
+                        <div class="nav-actions">
+                            <!-- Store -->
+                            <a href="{% url 'store' %}" class="nav-btn">
+                                <i class="fa fa-shopping-bag"></i>
+                                <span>Store</span>
+                            </a>
 
-                        <!-- Category Dropdown -->
-                        <div class="dropdown mr-3">
-                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-bars mr-1"></i> Categories
-                            </button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="{% url 'store' %}">All Products</a>
-                                {% for category in links %}
-                                    <a class="dropdown-item" href="{{ category.get_url }}">{{ category.category_name }}</a>
-                                {% endfor %}
+                            <!-- Categories -->
+                            <div class="category-dropdown">
+                                <button type="button" class="category-trigger">
+                                    <i class="fa fa-th"></i>
+                                    <span>Categories</span>
+                                    <i class="fa fa-angle-down"></i>
+                                </button>
+                                <div class="category-menu">
+                                    <a href="{% url 'store' %}" class="category-item">
+                                        <i class="fa fa-list"></i>
+                                        <span>All Products</span>
+                                    </a>
+                                    {% for category in links %}
+                                    <a href="{{ category.get_url }}" class="category-item">
+                                        <i class="fa fa-tag"></i>
+                                        <span>{{ category.category_name }}</span>
+                                    </a>
+                                    {% endfor %}
+                                </div>
                             </div>
                         </div>
 
-                        <!-- Authentication Section -->
-                        <div class="ml-2 text-right">
-                            {% if user.is_authenticated %}
-                                <div class="widget-header">
-                                    <small class="text-muted">Welcome, <span class="user-greeting">{{ user.first_name }}</span></small><br>
-                                    <a href="{% url 'logout' %}" class="text-danger small">Logout</a>
+                        <div class="divider d-none d-lg-block"></div>
+
+                        <!-- User Section -->
+                        {% if user.is_authenticated %}
+                        <div class="user-widget">
+                            <div class="user-dropdown-trigger">
+                                <div class="user-avatar">
+                                    {{ user.first_name|first|upper|default:"U" }}
                                 </div>
-                            {% else %}
-                                <div class="widget-header auth-links">
-                                    <small class="text-muted">Welcome Guest!</small><br>
-                                    <a href="{% url 'login' %}">Login</a> | 
-                                    <a href="{% url 'register' %}">Register</a>
+                                <div class="user-info">
+                                    <span class="user-greeting">Welcome</span>
+                                    <span class="user-name">{{ user.first_name|default:"User" }}</span>
                                 </div>
-                            {% endif %}
-                            {% if user.is_authenticated %}
-                            <a href="{% url 'cart' %}" class="widget-header pl-2 ml-2">
-                                <div class="icontext">
-                                    <div class="icon">
-                                        <i class="fa fa-shopping-cart" style="font-size: 1.5rem;"></i>
-                                    </div>
-                                    <span class="badge notify">{{cart_count}}</span>
+                                <i class="fa fa-angle-down user-dropdown-icon"></i>
+                            </div>
+                            
+                            <div class="user-dropdown-menu">
+                                <div class="user-dropdown-header">
+                                    <div class="user-dropdown-title">{{ user.get_full_name|default:"User Account" }}</div>
+                                    <div class="user-dropdown-email">{{ user.email }}</div>
                                 </div>
-                            </a>
-                            {% endif %}
+                                <a href="{% url 'dashboard' %}" class="user-dropdown-item">
+                                    <i class="fa fa-user-circle"></i>
+                                    <span>My Profile</span>
+                                </a>
+                                <a href="{% url 'my_orders' %}" class="user-dropdown-item">
+                                    <i class="fa fa-shopping-bag"></i>
+                                    <span>My Orders</span>
+                                </a>
+                                <div class="user-dropdown-divider"></div>
+                                <a href="{% url 'logout' %}" class="user-dropdown-item logout">
+                                    <i class="fa fa-power-off"></i>
+                                    <span>Logout</span>
+                                </a>
+                            </div>
                         </div>
+                        {% else %}
+                        <a href="{% url 'login' %}" class="auth-link">
+                            <i class="fa fa-sign-in-alt"></i>
+                            <span>Login</span>
+                        </a>
+                        <a href="{% url 'register' %}" class="auth-link primary">
+                            <i class="fa fa-user-plus"></i>
+                            <span>Register</span>
+                        </a>
+                        {% endif %}
+
+                        <!-- Cart -->
+                        <a href="{% url 'cart' %}" class="cart-widget">
+                            <i class="fa fa-shopping-cart cart-icon"></i>
+                            {% if cart_count > 0 %}
+                            <span class="cart-badge">{{ cart_count }}</span>
+                            {% endif %}
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </header>
+
+<script>
+    window.addEventListener('scroll', function() {
+        const header = document.querySelector('.main-header');
+        if (window.scrollY > 50) {
+            header.style.boxShadow = 'var(--shadow-lg)';
+        } else {
+            header.style.boxShadow = 'var(--shadow-md)';
+        }
+    });
+</script>

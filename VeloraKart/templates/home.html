@@ -2,56 +2,157 @@
 {% load static %}
 
 {% block content %}
+<style>
+/* Small, self-contained styling to improve look without changing base */
+.hero {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.hero .overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(0,0,0,0.35), rgba(0,0,0,0.15));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  text-align:center;
+  padding:3rem 1rem;
+}
+.hero h1 { font-weight:700; font-size:2rem; margin-bottom:0.5rem; }
+.hero p { opacity:0.95; margin-bottom:1rem; }
+.section-title {
+  font-size:1.25rem;
+  font-weight:700;
+  letter-spacing:0.2px;
+}
+.card-product-grid {
+  border:1px solid #eef1f4;
+  transition: transform .18s ease, box-shadow .18s ease;
+  border-radius:8px;
+}
+.card-product-grid:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 30px rgba(35,47,60,0.08);
+}
+.img-wrap {
+  display:block;
+  height:220px;
+  overflow:hidden;
+  background:#f8f9fb;
+}
+.img-wrap img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition: transform .35s ease;
+}
+.card-product-grid:hover .img-wrap img { transform: scale(1.06); }
+.info-wrap .title { display:block; font-weight:600; color:#1f2d3d; text-decoration:none; }
+.price { font-size:1rem; color:#183153; }
+.price .old { color:#8a97aa; text-decoration:line-through; margin-right:0.5rem; font-size:0.9rem; }
+.rating-star i { color:#f6c945; margin-right:2px; }
+.btn-cta {
+  background: linear-gradient(90deg,#3b82f6,#06b6d4);
+  color:#fff;
+  border:none;
+  border-radius:6px;
+  padding:0.45rem 0.75rem;
+  font-weight:600;
+  box-shadow:0 6px 18px rgba(59,130,246,0.12);
+}
+.see-all {
+  font-weight:600;
+  color:#3b82f6;
+  text-decoration:none;
+}
+.empty-placeholder {
+  padding:2rem;
+  background:#ffffff;
+  border:1px dashed #e6eef8;
+  border-radius:8px;
+  text-align:center;
+  color:#5b6b7a;
+}
+</style>
 
 <section class="section-intro padding-y-sm">
-<div class="container">
-    <div class="intro-banner-wrap">
-        <img src="{% static 'images/banners/ecommerce-banner.jpg' %}" class="img-fluid rounded" alt="Promotional banner showcasing the latest collection">
+  <div class="container">
+    <div class="hero">
+      <img src="{% static 'images/banners/ecommerce-banner.jpg' %}" alt="Promotional banner showcasing latest collection" class="img-fluid w-100" loading="lazy">
+      {% comment %} <div class="overlay">
+        <div style="max-width:900px">
+          <h1>Discover curated products for everyday style</h1>
+          <p class="mb-3">Quality picks, transparent prices and fast shipping — shop with confidence.</p>
+          <a href="{% url 'store' %}" class="btn btn-cta">Shop Now</a>
+        </div>
+      </div> {% endcomment %}
     </div>
-</div>
+  </div>
 </section>
----
 
 <section class="section-name padding-y">
-<div class="container">
+  <div class="container">
+    <header class="section-heading d-flex justify-content-between align-items-center mb-4">
+      <h3 class="section-title mb-0">Popular products</h3>
+      <a href="{% url 'store' %}" class="see-all">See all products →</a>
+    </header>
 
-<header class="section-heading d-flex justify-content-between align-items-center mb-4">
-    <h3 class="section-title mb-0">Popular products</h3>
-    <a href="{% url 'store' %}" class="btn btn-outline-primary float-right">See all</a>
-</header>
-
-<div class="row">
-    {% for product in products %}
-    <div class="col-md-4 col-lg-3 mb-4">
+    <div class="row">
+      {% for product in products %}
+      <div class="col-6 col-md-4 col-lg-3 mb-4">
         <div class="card card-product-grid h-100">
-            <a href="{{ product.get_url }}" class="img-wrap">
-                <img src="{{ product.images.url }}" alt="Image of {{ product.product_name }}" loading="lazy">
+          <a href="{{ product.get_url }}" class="img-wrap" aria-label="Open {{ product.product_name }}">
+            {% if product.images %}
+              <img src="{{ product.images.url }}" alt="Image of {{ product.product_name }}" loading="lazy">
+            {% else %}
+              <img src="{% static 'images/placeholders/product-placeholder.png' %}" alt="No image available" loading="lazy">
+            {% endif %}
+          </a>
+
+          <figcaption class="info-wrap p-3">
+            <a href="{{ product.get_url }}" class="title" aria-label="{{ product.product_name }}">
+              <h6 class="mb-1" style="font-size:0.95rem;">{{ product.product_name|truncatechars:50 }}</h6>
             </a>
-            <figcaption class="info-wrap border-top p-3">
-                <a href="{{ product.get_url }}" class="title" style="color: #212529; text-decoration: none;">
-                    <h6 class="title">{{ product.product_name }}</h6>
-                </a>
 
-                <div class="rating-star mb-2" aria-label="Product rating: {{ product.averageReview|floatformat:1 }} out of 5 stars">
-                    <span>
-                        <i class="fa fa-star{% if product.averageReview < 0.5 %}-o{% elif product.averageReview >= 0.5 and product.averageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
-                        <i class="fa fa-star{% if product.averageReview < 1.5 %}-o{% elif product.averageReview >= 1.5 and product.averageReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
-                        <i class="fa fa-star{% if product.averageReview < 2.5 %}-o{% elif product.averageReview >= 2.5 and product.averageReview < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
-                        <i class="fa fa-star{% if product.averageReview < 3.5 %}-o{% elif product.averageReview >= 3.5 and product.averageReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
-                        <i class="fa fa-star{% if product.averageReview < 4.5 %}-o{% elif product.averageReview >= 4.5 and product.averageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
-                    </span>
-                </div>
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <div class="rating-star" aria-hidden="true">
+                <span>
+                  <i class="fa fa-star{% if product.averageReview < 0.5 %}-o{% elif product.averageReview >= 0.5 and product.averageReview < 1 %}-half-o{% endif %}"></i>
+                  <i class="fa fa-star{% if product.averageReview < 1.5 %}-o{% elif product.averageReview >= 1.5 and product.averageReview < 2 %}-half-o{% endif %}"></i>
+                  <i class="fa fa-star{% if product.averageReview < 2.5 %}-o{% elif product.averageReview >= 2.5 and product.averageReview < 3 %}-half-o{% endif %}"></i>
+                  <i class="fa fa-star{% if product.averageReview < 3.5 %}-o{% elif product.averageReview >= 3.5 and product.averageReview < 4 %}-half-o{% endif %}"></i>
+                  <i class="fa fa-star{% if product.averageReview < 4.5 %}-o{% elif product.averageReview >= 4.5 and product.averageReview < 5 %}-half-o{% endif %}"></i>
+                </span>
+              </div>
 
-                <div class="price mt-1 mb-3">
-                    <span class="font-weight-bold">${{ product.price }}</span>
-                </div>
+              <div class="price text-right">
+                {% if product.old_price %}
+                  <span class="old">${{ product.old_price }}</span>
+                {% endif %}
+                <span class="font-weight-bold">${{ product.price }}</span>
+              </div>
+            </div>
 
-            </figcaption>
+            <div class="d-flex justify-content-between align-items-center">
+              <a href="{{ product.get_url }}" class="btn btn-outline-secondary btn-sm" style="border-radius:6px;">View</a>
+              <a href="{% url 'add_cart' product.id %}" class="btn btn-cta btn-sm" aria-label="Add {{ product.product_name }} to cart">Add</a>
+            </div>
+          </figcaption>
         </div>
-    </div> {% empty %}
-    <div class="col-12">
-        <p>No products are available at this time.</p>
+      </div>
+      {% empty %}
+      <div class="col-12">
+        <div class="empty-placeholder">
+          <h5>No products available</h5>
+          <p>We are restocking — check back soon or explore other categories.</p>
+          <a href="{% url 'store' %}" class="btn btn-cta">Browse store</a>
+        </div>
+      </div>
+      {% endfor %}
     </div>
-    {% endfor %}
-</div> </div></section>
+  </div>
+</section>
 {% endblock %}
+// ...existing code...
