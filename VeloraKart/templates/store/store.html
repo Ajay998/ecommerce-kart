@@ -2,194 +2,578 @@
 {% load static %}
 
 {% block content %}
+
+<style>
+    :root {
+        --primary-color: #2563eb;
+        --primary-hover: #1d4ed8;
+        --text-primary: #1e293b;
+        --text-secondary: #64748b;
+        --border-color: #e2e8f0;
+        --light-bg: #f8fafc;
+        --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Page Header */
+    .section-pagetop {
+        background: linear-gradient(135deg, var(--primary-color) 0%, #7c3aed 100%);
+        padding: 2rem 0;
+        margin-bottom: 2rem;
+    }
+
+    .title-page {
+        color: #fff;
+        font-size: 2rem;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    /* Section Content */
+    .section-content {
+        padding: 2rem 0 4rem;
+        background: var(--light-bg);
+    }
+
+    /* Sidebar Fixes */
+    .card {
+        border: none;
+        border-radius: 0.75rem;
+        box-shadow: var(--shadow);
+        margin-bottom: 1.5rem;
+        overflow: hidden;
+    }
+
+    .filter-group {
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .filter-group:last-child {
+        border-bottom: none;
+    }
+
+    .card-header {
+        background: #fff;
+        border: none;
+        padding: 1rem 1.25rem;
+    }
+
+    .card-header a {
+        text-decoration: none;
+        color: var(--text-primary);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-weight: 600;
+    }
+
+    .card-header .title {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 600;
+    }
+
+    .icon-control {
+        transition: transform 0.3s ease;
+        color: var(--primary-color);
+    }
+
+    .card-header a[aria-expanded="true"] .icon-control {
+        transform: rotate(180deg);
+    }
+
+    .card-body {
+        padding: 1.25rem;
+    }
+
+    /* Category List */
+    .list-menu {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .list-menu li {
+        margin-bottom: 0.5rem;
+    }
+
+    .list-menu li a {
+        display: block;
+        padding: 0.625rem 1rem;
+        color: var(--text-secondary);
+        text-decoration: none;
+        border-radius: 0.5rem;
+        transition: all 0.3s ease;
+        font-size: 0.938rem;
+    }
+
+    .list-menu li a:hover {
+        background: var(--light-bg);
+        color: var(--primary-color);
+        transform: translateX(5px);
+    }
+
+    /* Price Range */
+    .form-row {
+        margin-bottom: 1rem;
+    }
+
+    .form-control {
+        border: 2px solid var(--border-color);
+        border-radius: 0.5rem;
+        padding: 0.625rem 0.875rem;
+        font-size: 0.875rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        outline: none;
+    }
+
+    .btn-block {
+        width: 100%;
+        padding: 0.75rem;
+        background: var(--primary-color);
+        color: #fff;
+        border: none;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-block:hover {
+        background: var(--primary-hover);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+
+    /* Store Header */
+    .border-bottom {
+        background: #fff;
+        padding: 1.25rem 1.5rem;
+        border-radius: 0.75rem;
+        box-shadow: var(--shadow);
+        margin-bottom: 1.5rem !important;
+        border: none !important;
+    }
+
+    .border-bottom span {
+        font-size: 1.125rem;
+        color: var(--text-primary);
+    }
+
+    .border-bottom b {
+        color: var(--primary-color);
+        font-weight: 700;
+    }
+
+    /* Product Grid */
+    .row {
+        margin-left: -0.75rem;
+        margin-right: -0.75rem;
+    }
+
+    .row > [class*="col-"] {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+
+    /* Product Card */
+    .card-product-grid {
+        background: #fff;
+        border-radius: 0.75rem;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        transition: all 0.3s ease;
+        margin-bottom: 1.5rem;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .card-product-grid:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Image Wrapper - Fixed Size & Centered */
+    .img-wrap {
+        position: relative;
+        width: 100%;
+        padding-top: 75%; /* 4:3 Aspect Ratio */
+        background: var(--light-bg);
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .img-wrap img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        object-fit: contain; /* Changed from cover to contain */
+        transition: transform 0.5s ease;
+    }
+
+    .card-product-grid:hover .img-wrap img {
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+
+    /* Product Info */
+    .info-wrap {
+        padding: 1.25rem;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+
+    .fix-height {
+        flex: 1;
+        margin-bottom: 1rem;
+    }
+
+    .info-wrap .title {
+        font-size: 0.938rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        text-decoration: none;
+        line-height: 1.4;
+        margin-bottom: 0.75rem;
+        /* Truncate to 25 characters */
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+    }
+
+    .info-wrap .title:hover {
+        color: var(--primary-color);
+    }
+
+    /* Add title attribute for full name on hover */
+    .info-wrap .title[title]:hover {
+        cursor: pointer;
+    }
+
+    .price-wrap {
+        margin-top: 0.75rem !important;
+    }
+
+    .price {
+        font-size: 1.375rem;
+        font-weight: 700;
+        color: var(--primary-color);
+    }
+
+    .btn-primary {
+        background: var(--primary-color);
+        border: none;
+        color: #fff;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        font-size: 0.875rem;
+        transition: all 0.3s ease;
+        text-align: center;
+        display: block;
+        text-decoration: none;
+    }
+
+    .btn-primary:hover {
+        background: var(--primary-hover);
+        color: #fff;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+
+    /* Pagination */
+    .pagination {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
+        padding: 0;
+        margin: 2rem 0 0;
+    }
+
+    .page-item {
+        list-style: none;
+    }
+
+    .page-link {
+        padding: 0.625rem 1rem;
+        border: 2px solid var(--border-color);
+        background: #fff;
+        color: var(--text-primary);
+        border-radius: 0.5rem;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        display: block;
+    }
+
+    .page-link:hover {
+        border-color: var(--primary-color);
+        background: var(--primary-color);
+        color: #fff;
+    }
+
+    .page-item.active .page-link {
+        border-color: var(--primary-color);
+        background: var(--primary-color);
+        color: #fff;
+    }
+
+    .page-item.disabled .page-link {
+        opacity: 0.5;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+
+    /* No Results */
+    .no-results {
+        text-align: center;
+        padding: 3rem;
+        background: #fff;
+        border-radius: 0.75rem;
+        box-shadow: var(--shadow);
+    }
+
+    .no-results h2 {
+        color: var(--text-primary);
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .no-results p {
+        color: var(--text-secondary);
+        margin-bottom: 1.5rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .title-page {
+            font-size: 1.5rem;
+        }
+
+        .img-wrap {
+            padding-top: 100%; /* Square on mobile */
+        }
+
+        .card-product-grid {
+            margin-bottom: 1rem;
+        }
+
+        aside.col-md-3 {
+            margin-bottom: 2rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .section-content {
+            padding: 1rem 0 2rem;
+        }
+
+        .border-bottom {
+            padding: 1rem;
+            margin-bottom: 1rem !important;
+        }
+
+        .info-wrap {
+            padding: 1rem;
+        }
+
+        .price {
+            font-size: 1.125rem;
+        }
+    }
+</style>
+
 <!-- ========================= SECTION PAGETOP ========================= -->
 <section class="section-pagetop bg">
-<div class="container">
-	{% if 'search' in request.path %}
-		<h2 class="title-page">Search Result</h2>
-	{% else %}
-		<h2 class="title-page">Our Store</h2>
-	{% endif %}
-
-</div> <!-- container //  -->
+    <div class="container">
+        {% if 'search' in request.path %}
+            <h2 class="title-page">Search Results</h2>
+        {% else %}
+            <h2 class="title-page">Our Store</h2>
+        {% endif %}
+    </div>
 </section>
 <!-- ========================= SECTION INTRO END// ========================= -->
 
 <!-- ========================= SECTION CONTENT ========================= -->
 <section class="section-content padding-y">
-<div class="container">
+    <div class="container">
+        <div class="row">
+            <!-- Sidebar -->
+            <aside class="col-md-3">
+                <div class="card">
+                    <!-- Categories Filter -->
+                    <article class="filter-group">
+                        <header class="card-header">
+                            <a href="#" data-toggle="collapse" data-target="#collapse_1" aria-expanded="true">
+                                <h6 class="title">Categories</h6>
+                                <i class="icon-control fa fa-chevron-down"></i>
+                            </a>
+                        </header>
+                        <div class="filter-content collapse show" id="collapse_1">
+                            <div class="card-body">
+                                <ul class="list-menu">
+                                    <li><a href="{% url 'store' %}">All Products</a></li>
+                                    {% for category in links %}
+                                    <li><a href="{{ category.get_url }}">{{ category.category_name }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </article>
 
-<div class="row">
-	<aside class="col-md-3">
+                    <!-- Price Range Filter -->
+                    <article class="filter-group">
+                        <header class="card-header">
+                            <a href="#" data-toggle="collapse" data-target="#collapse_3" aria-expanded="true">
+                                <h6 class="title">Price Range</h6>
+                                <i class="icon-control fa fa-chevron-down"></i>
+                            </a>
+                        </header>
+                        <div class="filter-content collapse show" id="collapse_3">
+                            <div class="card-body">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label>Min</label>
+                                        <select class="form-control">
+                                            <option value="0">$0</option>
+                                            <option value="50">$50</option>
+                                            <option value="100">$100</option>
+                                            <option value="150">$150</option>
+                                            <option value="200">$200</option>
+                                            <option value="500">$500</option>
+                                            <option value="1000">$1000</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Max</label>
+                                        <select class="form-control">
+                                            <option value="50">$50</option>
+                                            <option value="100">$100</option>
+                                            <option value="150">$150</option>
+                                            <option value="200">$200</option>
+                                            <option value="500">$500</option>
+                                            <option value="1000">$1000</option>
+                                            <option value="2000">$2000+</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button class="btn btn-block btn-primary">Apply</button>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </aside>
 
-<div class="card">
-	<article class="filter-group">
-		<header class="card-header">
-			<a href="#" data-toggle="collapse" data-target="#collapse_1" aria-expanded="true" class="">
-				<i class="icon-control fa fa-chevron-down"></i>
-				<h6 class="title">Categories</h6>
-			</a>
-		</header>
-		<div class="filter-content collapse show" id="collapse_1" style="">
-			<div class="card-body">
+            <!-- Main Content -->
+            <main class="col-md-9">
+                <!-- Header -->
+                <header class="border-bottom mb-4 pb-3">
+                    <div class="form-inline">
+                        <span class="mr-md-auto"><b>{{ product_count }}</b> items found</span>
+                    </div>
+                </header>
 
-				<ul class="list-menu">
-					<li><a href="{% url 'store' %}">All Products  </a></li>
-					{% for category in links %}
-				<li><a href="{{ category.get_url }}">{{ category.category_name }}  </a></li>
-					{% endfor %}
-				</ul>
+                <!-- Products Grid -->
+                <div class="row">
+                    {% if products %}
+                        {% for product in products %}
+                        <div class="col-md-4">
+                            <figure class="card card-product-grid">
+                                <div class="img-wrap">
+                                    <a href="{{ product.get_url }}">
+                                        <img src="{{ product.images.url }}" alt="{{ product.product_name }}">
+                                    </a>
+                                </div>
+                                <figcaption class="info-wrap">
+                                    <div class="fix-height">
+                                        <a href="{{ product.get_url }}" class="title" title="{{ product.product_name }}">
+                                            {% if product.product_name|length > 25 %}
+                                                {{ product.product_name|slice:":25" }}...
+                                            {% else %}
+                                                {{ product.product_name }}
+                                            {% endif %}
+                                        </a>
+                                        <div class="price-wrap mt-2">
+                                            <span class="price">${{ product.price }}</span>
+                                        </div>
+                                    </div>
+                                    <a href="{{ product.get_url }}" class="btn btn-block btn-primary">View Details</a>
+                                </figcaption>
+                            </figure>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="col-12">
+                            <div class="no-results">
+                                <h2>No Results Found</h2>
+                                <p>We couldn't find any products matching your criteria.</p>
+                                <a href="{% url 'store' %}" class="btn btn-primary">Back to Store</a>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
 
-			</div> <!-- card-body.// -->
-		</div>
-	</article> <!-- filter-group  .// -->
-	<article class="filter-group">
-		<header class="card-header">
-			<a href="#" data-toggle="collapse" data-target="#collapse_4" aria-expanded="true" class="">
-				<i class="icon-control fa fa-chevron-down"></i>
-				<h6 class="title">Sizes </h6>
-			</a>
-		</header>
-		<div class="filter-content collapse show" id="collapse_4" style="">
-			<div class="card-body">
-			  <label class="checkbox-btn">
-			    <input type="checkbox">
-			    <span class="btn btn-light"> XS </span>
-			  </label>
+                <!-- Pagination -->
+                <nav class="mt-4" aria-label="Page navigation">
+                    {% if products.has_other_pages %}
+                    <ul class="pagination">
+                        {% if products.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ products.previous_page_number }}">
+                                <i class="fa fa-chevron-left"></i>
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <span class="page-link">
+                                <i class="fa fa-chevron-left"></i>
+                            </span>
+                        </li>
+                        {% endif %}
 
-			  <label class="checkbox-btn">
-			    <input type="checkbox">
-			    <span class="btn btn-light"> SM </span>
-			  </label>
+                        {% for i in products.paginator.page_range %}
+                            {% if products.number == i %}
+                            <li class="page-item active">
+                                <span class="page-link">{{ i }}</span>
+                            </li>
+                            {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                            </li>
+                            {% endif %}
+                        {% endfor %}
 
-			  <label class="checkbox-btn">
-			    <input type="checkbox">
-			    <span class="btn btn-light"> LG </span>
-			  </label>
-
-			  <label class="checkbox-btn">
-			    <input type="checkbox">
-			    <span class="btn btn-light"> XXL </span>
-			  </label>
-		</div><!-- card-body.// -->
-		</div>
-	</article> <!-- filter-group .// -->
-
-	<article class="filter-group">
-		<header class="card-header">
-			<a href="#" data-toggle="collapse" data-target="#collapse_3" aria-expanded="true" class="">
-				<i class="icon-control fa fa-chevron-down"></i>
-				<h6 class="title">Price range </h6>
-			</a>
-		</header>
-		<div class="filter-content collapse show" id="collapse_3" style="">
-			<div class="card-body">
-
-				<div class="form-row">
-				<div class="form-group col-md-6">
-				  <label>Min</label>
-				  <!-- <input class="form-control" placeholder="$0" type="number"> -->
-				  	<select class="mr-2 form-control">
-						<option value="0">$0</option>
-						<option value="50">$50</option>
-						<option value="100">$100</option>
-						<option value="150">$150</option>
-						<option value="200">$200</option>
-						<option value="500">$500</option>
-						<option value="1000">$1000</option>
-					</select>
-				</div>
-				<div class="form-group text-right col-md-6">
-				  <label>Max</label>
-				  	<select class="mr-2 form-control">
-						<option value="50">$50</option>
-						<option value="100">$100</option>
-						<option value="150">$150</option>
-						<option value="200">$200</option>
-						<option value="500">$500</option>
-						<option value="1000">$1000</option>
-						<option value="2000">$2000+</option>
-					</select>
-				</div>
-				</div> <!-- form-row.// -->
-				<button class="btn btn-block btn-primary">Apply</button>
-			</div><!-- card-body.// -->
-		</div>
-	</article> <!-- filter-group .// -->
-
-</div> <!-- card.// -->
-
-	</aside> <!-- col.// -->
-	<main class="col-md-9">
-
-<header class="border-bottom mb-4 pb-3">
-		<div class="form-inline">
-			<span class="mr-md-auto"><b>{{ product_count }}</b> items found </span>
-
-		</div>
-</header><!-- sect-heading -->
-
-<div class="row">
-	{% if products %}
-	{% for product in products %}
-	<div class="col-md-4">
-		<figure class="card card-product-grid">
-			<div class="img-wrap">
-
-				<a href="{{ product.get_url }}"><img src="{{ product.images.url }}"></a>
-
-			</div> <!-- img-wrap.// -->
-			<figcaption class="info-wrap">
-				<div class="fix-height">
-					<a href="{{ product.get_url }}" class="title">{{ product.product_name }}</a>
-					<div class="price-wrap mt-2">
-						<span class="price">$ {{ product.price }}</span>
-					</div> <!-- price-wrap.// -->
-				</div>
-				<a href="{{ product.get_url }}" class="btn btn-block btn-primary">View Details </a>
-			</figcaption>
-		</figure>
-	</div> <!-- col.// -->
-	{% endfor %}
-	{% else %}
-	<div>
-		<h2>No result found. Please try again.</h2>
-	</div>
-	{% endif %}
-</div> <!-- row end.// -->
-
-
-<nav class="mt-4" aria-label="Page navigation sample">
-	{% if products.has_other_pages %}
-	  <ul class="pagination">
-			{% if products.has_previous %}
-	    <li class="page-item"><a class="page-link" href="?page={{products.previous_page_number}}">Previous</a></li>
-			{% else %}
-			<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-			{% endif %}
-
-			{% for i in products.paginator.page_range %}
-				{% if products.number == i %}
-	    		<li class="page-item active"><a class="page-link" href="#">{{i}}</a></li>
-				{% else %}
-					<li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
-				{% endif %}
-	    {% endfor %}
-
-			{% if products.has_next %}
-	    	<li class="page-item"><a class="page-link" href="?page={{products.next_page_number}}">Next</a></li>
-			{% else %}
-				<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
-			{% endif %}
-	  </ul>
-	{% endif %}
-</nav>
-
-	</main> <!-- col.// -->
-
-</div>
-
-</div> <!-- container .//  -->
+                        {% if products.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ products.next_page_number }}">
+                                <i class="fa fa-chevron-right"></i>
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <span class="page-link">
+                                <i class="fa fa-chevron-right"></i>
+                            </span>
+                        </li>
+                        {% endif %}
+                    </ul>
+                    {% endif %}
+                </nav>
+            </main>
+        </div>
+    </div>
 </section>
 <!-- ========================= SECTION CONTENT END// ========================= -->
 
