@@ -1,12 +1,150 @@
+<style>
+    /* Sidebar Styling */
+    .dashboard-sidebar {
+        background: #fff;
+        border-radius: 1rem;
+        overflow: hidden;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 20px;
+        margin-bottom: 2rem;
+    }
+
+    .sidebar-header {
+        background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+        padding: 1.5rem;
+        text-align: center;
+        color: #fff;
+    }
+
+    .sidebar-header h6 {
+        margin: 0;
+        font-size: 1.125rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    .sidebar-menu {
+        padding: 0.75rem 0;
+        list-style: none;
+        margin: 0;
+    }
+
+    .sidebar-menu .list-group-item {
+        border: none;
+        padding: 1rem 1.5rem;
+        color: #64748b;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.875rem;
+        font-weight: 500;
+        background: transparent;
+        text-decoration: none;
+        border-left: 3px solid transparent;
+    }
+
+    .sidebar-menu .list-group-item i {
+        font-size: 1.125rem;
+        width: 24px;
+        text-align: center;
+        color: #64748b;
+        transition: all 0.3s ease;
+    }
+
+    .sidebar-menu .list-group-item:hover {
+        background: #f8fafc;
+        color: #2563eb;
+        transform: translateX(5px);
+        text-decoration: none;
+        border-left-color: #2563eb;
+    }
+
+    .sidebar-menu .list-group-item:hover i {
+        color: #2563eb;
+    }
+
+    .sidebar-menu .list-group-item.active {
+        background: linear-gradient(90deg, rgba(37, 99, 235, 0.1) 0%, transparent 100%);
+        color: #2563eb;
+        border-left-color: #2563eb;
+        font-weight: 600;
+    }
+
+    .sidebar-menu .list-group-item.active i {
+        color: #2563eb;
+    }
+
+    .sidebar-footer {
+        padding: 1rem;
+        border-top: 1px solid #e2e8f0;
+    }
+
+    .btn-logout {
+        width: 100%;
+        padding: 0.875rem 1.5rem;
+        background: #fff;
+        border: 2px solid #e2e8f0;
+        border-radius: 0.5rem;
+        color: #ef4444;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.625rem;
+        text-decoration: none;
+    }
+
+    .btn-logout:hover {
+        background: #ef4444;
+        border-color: #ef4444;
+        color: #fff;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        text-decoration: none;
+    }
+
+    .btn-logout i {
+        font-size: 1.125rem;
+    }
+
+    @media (max-width: 768px) {
+        .dashboard-sidebar {
+            position: relative;
+            top: 0;
+        }
+    }
+</style>
+
 <aside class="col-md-3">
-  <!--   SIDEBAR   -->
-  <ul class="list-group">
-    <a class="list-group-item {% if '/accounts/' == request.path %}active{% endif %}" href="{% url 'dashboard' %}"> Dashboard </a>
-    <a class="list-group-item {% if '/my_orders/' in request.path %}active{% endif %}" href="{% url 'my_orders' %}"> My Orders </a>
-    <a class="list-group-item {% if '/edit_profile/' in request.path %}active{% endif %}" href="{% url 'edit_profile' %}"> Edit Profile </a>
-    <a class="list-group-item {% if '/change_password/' in request.path %}active{% endif %}" href="{% url 'change_password' %}"> Change Password </a>
-  </ul>
-  <br>
-  <a class="btn btn-light btn-block" href="{% url 'logout' %}"> <i class="fa fa-power-off"></i> <span class="text">Log out</span> </a>
-  <!--   SIDEBAR .//END   -->
+    <div class="dashboard-sidebar">
+        <div class="sidebar-header">
+            <h6>Dashboard Menu</h6>
+        </div>
+        <ul class="sidebar-menu list-group">
+            <a class="list-group-item {% if '/accounts/' == request.path %}active{% endif %}" href="{% url 'dashboard' %}">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+            <a class="list-group-item {% if '/my_orders/' in request.path %}active{% endif %}" href="{% url 'my_orders' %}">
+                <i class="fas fa-shopping-bag"></i>
+                <span>My Orders</span>
+            </a>
+            <a class="list-group-item {% if '/edit_profile/' in request.path %}active{% endif %}" href="{% url 'edit_profile' %}">
+                <i class="fas fa-user-edit"></i>
+                <span>Edit Profile</span>
+            </a>
+            <a class="list-group-item {% if '/change_password/' in request.path %}active{% endif %}" href="{% url 'change_password' %}">
+                <i class="fas fa-key"></i>
+                <span>Change Password</span>
+            </a>
+        </ul>
+        <div class="sidebar-footer">
+            <a class="btn-logout" href="{% url 'logout' %}">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Log out</span>
+            </a>
+        </div>
+    </div>
 </aside>
