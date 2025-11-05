@@ -1,0 +1,390 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    :root {
+        --primary-color: #2563eb;
+        --primary-hover: #1d4ed8;
+        --success-color: #10b981;
+        --danger-color: #ef4444;
+        --warning-color: #f59e0b;
+        --text-primary: #1e293b;
+        --text-secondary: #64748b;
+        --border-color: #e2e8f0;
+        --light-bg: #f8fafc;
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Hero Section */
+    .careers-hero {
+        background: linear-gradient(135deg, var(--primary-color) 0%, #7c3aed 100%);
+        padding: 4rem 0;
+        color: #fff;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .careers-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        opacity: 0.5;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 1;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .hero-title {
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        line-height: 1.2;
+    }
+
+    .hero-subtitle {
+        font-size: 1.25rem;
+        opacity: 0.95;
+        margin-bottom: 2rem;
+    }
+
+    .hero-stats {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        margin-top: 2rem;
+    }
+
+    .hero-stat {
+        text-align: center;
+    }
+
+    .hero-stat-value {
+        font-size: 2.5rem;
+        font-weight: 800;
+        display: block;
+        margin-bottom: 0.25rem;
+    }
+
+    .hero-stat-label {
+        font-size: 0.938rem;
+        opacity: 0.9;
+    }
+
+    /* Why Join Section */
+    .why-join-section {
+        padding: 4rem 0;
+        background: #fff;
+    }
+
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+
+    .section-subtitle {
+        text-align: center;
+        color: var(--text-secondary);
+        font-size: 1.125rem;
+        margin-bottom: 3rem;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .benefits-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        margin-top: 3rem;
+    }
+
+    .benefit-card {
+        background: var(--light-bg);
+        border-radius: 1rem;
+        padding: 2rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+    }
+
+    .benefit-card:hover {
+        background: #fff;
+        border-color: var(--primary-color);
+        box-shadow: var(--shadow-lg);
+        transform: translateY(-5px);
+    }
+
+    .benefit-icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .benefit-card:nth-child(1) .benefit-icon {
+        background: rgba(37, 99, 235, 0.1);
+        color: var(--primary-color);
+    }
+
+    .benefit-card:nth-child(2) .benefit-icon {
+        background: rgba(16, 185, 129, 0.1);
+        color: var(--success-color);
+    }
+
+    .benefit-card:nth-child(3) .benefit-icon {
+        background: rgba(245, 158, 11, 0.1);
+        color: var(--warning-color);
+    }
+
+    .benefit-card:nth-child(4) .benefit-icon {
+        background: rgba(239, 68, 68, 0.1);
+        color: var(--danger-color);
+    }
+
+    .benefit-card:nth-child(5) .benefit-icon {
+        background: rgba(124, 58, 237, 0.1);
+        color: #7c3aed;
+    }
+
+    .benefit-card:nth-child(6) .benefit-icon {
+        background: rgba(236, 72, 153, 0.1);
+        color: #ec4899;
+    }
+
+    .benefit-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 0.75rem;
+    }
+
+    .benefit-description {
+        color: var(--text-secondary);
+        line-height: 1.7;
+        font-size: 0.938rem;
+    }
+
+    /* CTA Section */
+    .cta-section {
+        background: linear-gradient(135deg, var(--primary-color) 0%, #7c3aed 100%);
+        padding: 4rem 0;
+        text-align: center;
+        color: #fff;
+    }
+
+    .cta-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+    }
+
+    .cta-text {
+        font-size: 1.125rem;
+        opacity: 0.95;
+        margin-bottom: 2rem;
+    }
+
+    .cta-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .btn-cta-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1rem 2.5rem;
+        background: #fff;
+        color: var(--primary-color);
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 1.125rem;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: 2px solid #fff;
+    }
+
+    .btn-cta-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        color: var(--primary-color);
+        text-decoration: none;
+    }
+
+    .btn-cta-secondary {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1rem 2.5rem;
+        background: transparent;
+        color: #fff;
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 1.125rem;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: 2px solid #fff;
+    }
+
+    .btn-cta-secondary:hover {
+        background: #fff;
+        color: var(--primary-color);
+        transform: translateY(-3px);
+        text-decoration: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+        .benefits-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+        }
+
+        .hero-stats {
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .benefits-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .cta-buttons {
+            flex-direction: column;
+            align-items: stretch;
+        }
+    }
+</style>
+
+<!-- Hero Section -->
+<section class="careers-hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">Join Our Amazing Team</h1>
+            <p class="hero-subtitle">Build your career with VeloraKart and help shape the future of e-commerce</p>
+            
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <span class="hero-stat-value">200+</span>
+                    <span class="hero-stat-label">Team Members</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-value">15+</span>
+                    <span class="hero-stat-label">Countries</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-value">4.9</span>
+                    <span class="hero-stat-label">Glassdoor Rating</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why Join Section -->
+<section class="why-join-section">
+    <div class="container">
+        <h2 class="section-title">Why Join VeloraKart?</h2>
+        <p class="section-subtitle">We offer more than just a job - we offer a career with purpose, growth, and impact</p>
+        
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3 class="benefit-title">Career Growth</h3>
+                <p class="benefit-description">Clear career paths, mentorship programs, and continuous learning opportunities to help you grow professionally.</p>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <h3 class="benefit-title">Health & Wellness</h3>
+                <p class="benefit-description">Comprehensive health insurance, mental health support, and wellness programs for you and your family.</p>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <i class="fas fa-laptop-house"></i>
+                </div>
+                <h3 class="benefit-title">Flexible Work</h3>
+                <p class="benefit-description">Hybrid work model, flexible hours, and remote work options to help you achieve work-life balance.</p>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+                <h3 class="benefit-title">Competitive Pay</h3>
+                <p class="benefit-description">Industry-leading salaries, performance bonuses, stock options, and annual compensation reviews.</p>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3 class="benefit-title">Amazing Culture</h3>
+                <p class="benefit-description">Collaborative environment, team events, celebrations, and a culture that values diversity and inclusion.</p>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <i class="fas fa-gift"></i>
+                </div>
+                <h3 class="benefit-title">Great Perks</h3>
+                <p class="benefit-description">Free meals, gym membership, learning budget, parental leave, and many more exciting benefits.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <h2 class="cta-title">Ready to Make an Impact?</h2>
+        <p class="cta-text">Send us your resume and we'll keep you in mind for future opportunities.</p>
+        <div class="cta-buttons">
+            <a href="mailto:careers@velorakart.com" class="btn-cta-primary">
+                <i class="fas fa-envelope"></i>
+                <span>Send Your Resume</span>
+            </a>
+            <a href="{% url 'about' %}" class="btn-cta-secondary">
+                <i class="fas fa-info-circle"></i>
+                <span>Learn More About Us</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

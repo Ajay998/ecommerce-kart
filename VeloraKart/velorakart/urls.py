@@ -28,4 +28,6 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('orders/', include('orders.urls')),
     path('about/', views.about, name='about'),
+    path('careers/', views.careers, name='careers'),
+    path('terms/', views.terms, name='terms'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

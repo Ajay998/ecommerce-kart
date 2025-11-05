@@ -11,3 +11,12 @@ def home(request):
 
 def about(request):
     return render(request, 'company/about.html')
+
+def careers(request):
+    return render(request, 'company/careers.html')
+
+def terms(request):
+    return render(request, 'company/terms.html')
+
+
+
