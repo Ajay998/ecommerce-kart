@@ -1,0 +1,245 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    :root {
+        --primary-color: #2563eb;
+        --success-color: #10b981;
+        --text-primary: #1e293b;
+        --text-secondary: #64748b;
+        --border-color: #e2e8f0;
+        --light-bg: #f8fafc;
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .shipping-hero {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        padding: 3rem 0;
+        color: #fff;
+        text-align: center;
+    }
+
+    .shipping-hero h1 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+    }
+
+    .shipping-content {
+        padding: 3rem 0;
+        background: var(--light-bg);
+    }
+
+    .content-container {
+        max-width: 900px;
+        margin: 0 auto;
+        background: #fff;
+        border-radius: 1rem;
+        padding: 3rem;
+        box-shadow: var(--shadow);
+    }
+
+    .shipping-options {
+        display: grid;
+        gap: 1.5rem;
+        margin: 2rem 0;
+    }
+
+    .shipping-card {
+        background: var(--light-bg);
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+    }
+
+    .shipping-card:hover {
+        border-color: var(--primary-color);
+    }
+
+    .shipping-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        margin-bottom: 1rem;
+    }
+
+    .shipping-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 0.25rem;
+    }
+
+    .shipping-price {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--primary-color);
+    }
+
+    .shipping-time {
+        color: var(--text-secondary);
+        font-size: 0.938rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .shipping-features {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .shipping-features li {
+        color: var(--text-secondary);
+        padding: 0.5rem 0;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .shipping-features i {
+        color: var(--success-color);
+        font-size: 0.875rem;
+    }
+
+    .info-section {
+        margin: 2rem 0;
+    }
+
+    .info-section h3 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+    }
+
+    .info-section p {
+        color: var(--text-secondary);
+        line-height: 1.7;
+        margin-bottom: 0.75rem;
+    }
+
+    .info-section ul {
+        color: var(--text-secondary);
+        line-height: 1.8;
+    }
+
+    .highlight-box {
+        background: rgba(37, 99, 235, 0.05);
+        border-left: 4px solid var(--primary-color);
+        padding: 1.25rem;
+        border-radius: 0.5rem;
+        margin: 1.5rem 0;
+    }
+
+    @media (max-width: 768px) {
+        .shipping-hero h1 {
+            font-size: 2rem;
+        }
+        .content-container {
+            padding: 2rem 1.5rem;
+        }
+    }
+</style>
+
+<section class="shipping-hero">
+    <div class="container">
+        <h1>Shipping Information</h1>
+        <p>Fast, reliable delivery to your doorstep</p>
+    </div>
+</section>
+
+<section class="shipping-content">
+    <div class="container">
+        <div class="content-container">
+            <h2 style="font-size: 2rem; color: var(--text-primary); margin-bottom: 1rem;">Shipping Options</h2>
+            <p style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 2rem;">
+                We offer multiple shipping options to meet your needs. All orders are processed within 1-2 business days.
+            </p>
+
+            <div class="shipping-options">
+                <div class="shipping-card">
+                    <div class="shipping-header">
+                        <div>
+                            <div class="shipping-title">Standard Shipping</div>
+                            <div class="shipping-time">5-7 Business Days</div>
+                        </div>
+                        <div class="shipping-price">$4.99</div>
+                    </div>
+                    <ul class="shipping-features">
+                        <li><i class="fas fa-check-circle"></i> Track your package online</li>
+                        <li><i class="fas fa-check-circle"></i> Signature not required</li>
+                        <li><i class="fas fa-check-circle"></i> Free on orders over $50</li>
+                    </ul>
+                </div>
+
+                <div class="shipping-card">
+                    <div class="shipping-header">
+                        <div>
+                            <div class="shipping-title">Express Shipping</div>
+                            <div class="shipping-time">2-3 Business Days</div>
+                        </div>
+                        <div class="shipping-price">$12.99</div>
+                    </div>
+                    <ul class="shipping-features">
+                        <li><i class="fas fa-check-circle"></i> Priority handling</li>
+                        <li><i class="fas fa-check-circle"></i> Track your package online</li>
+                        <li><i class="fas fa-check-circle"></i> Free on orders over $100</li>
+                    </ul>
+                </div>
+
+                <div class="shipping-card">
+                    <div class="shipping-header">
+                        <div>
+                            <div class="shipping-title">Overnight Shipping</div>
+                            <div class="shipping-time">1 Business Day</div>
+                        </div>
+                        <div class="shipping-price">$24.99</div>
+                    </div>
+                    <ul class="shipping-features">
+                        <li><i class="fas fa-check-circle"></i> Next day delivery</li>
+                        <li><i class="fas fa-check-circle"></i> Signature required</li>
+                        <li><i class="fas fa-check-circle"></i> Order by 2 PM for same day dispatch</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <strong>Free Shipping:</strong> Enjoy free standard shipping on all orders over $50. 
+                Express shipping is free on orders over $100.
+            </div>
+
+            <div class="info-section">
+                <h3>International Shipping</h3>
+                <p>We ship to over 50 countries worldwide. International shipping times vary by destination:</p>
+                <ul>
+                    <li>Canada & Mexico: 7-10 business days</li>
+                    <li>Europe: 10-15 business days</li>
+                    <li>Asia & Pacific: 12-18 business days</li>
+                    <li>Rest of World: 15-25 business days</li>
+                </ul>
+                <p>Customs fees and import taxes may apply and are the responsibility of the recipient.</p>
+            </div>
+
+            <div class="info-section">
+                <h3>Order Processing</h3>
+                <p>
+                    All orders are processed within 1-2 business days (excluding weekends and holidays). 
+                    You will receive a confirmation email with tracking information once your order ships.
+                </p>
+            </div>
+
+            <div class="info-section">
+                <h3>Delivery Issues</h3>
+                <p>
+                    If your package hasn't arrived within the estimated delivery time, please contact our 
+                    customer service team. We'll work with the carrier to locate your package and ensure delivery.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

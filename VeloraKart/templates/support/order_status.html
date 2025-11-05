@@ -1,0 +1,342 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    :root {
+        --primary-color: #2563eb;
+        --success-color: #10b981;
+        --warning-color: #f59e0b;
+        --text-primary: #1e293b;
+        --text-secondary: #64748b;
+        --border-color: #e2e8f0;
+        --light-bg: #f8fafc;
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .status-hero {
+        background: linear-gradient(135deg, var(--primary-color) 0%, #7c3aed 100%);
+        padding: 3rem 0;
+        color: #fff;
+        text-align: center;
+    }
+
+    .status-hero h1 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+    }
+
+    .status-content {
+        padding: 3rem 0;
+        background: var(--light-bg);
+    }
+
+    .tracking-form {
+        max-width: 600px;
+        margin: 0 auto 3rem;
+        background: #fff;
+        border-radius: 1rem;
+        padding: 2.5rem;
+        box-shadow: var(--shadow);
+    }
+
+    .form-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+
+    .input-group {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .form-control {
+        flex: 1;
+        padding: 0.875rem 1rem;
+        border: 2px solid var(--border-color);
+        border-radius: 0.5rem;
+        font-size: 0.938rem;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--primary-color);
+    }
+
+    .btn-track {
+        padding: 0.875rem 2rem;
+        background: var(--primary-color);
+        color: #fff;
+        border: none;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+    }
+
+    .btn-track:hover {
+        background: #1d4ed8;
+    }
+
+    .timeline-container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: #fff;
+        border-radius: 1rem;
+        padding: 3rem;
+        box-shadow: var(--shadow);
+    }
+
+    .order-header {
+        text-align: center;
+        padding-bottom: 2rem;
+        border-bottom: 2px solid var(--border-color);
+        margin-bottom: 2rem;
+    }
+
+    .order-number {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+    }
+
+    .order-date {
+        color: var(--text-secondary);
+    }
+
+    .timeline {
+        position: relative;
+        padding-left: 3rem;
+    }
+
+    .timeline::before {
+        content: '';
+        position: absolute;
+        left: 20px;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        background: var(--border-color);
+    }
+
+    .timeline-item {
+        position: relative;
+        margin-bottom: 2rem;
+    }
+
+    .timeline-item:last-child {
+        margin-bottom: 0;
+    }
+
+    .timeline-icon {
+        position: absolute;
+        left: -2.85rem;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        z-index: 2;
+        border: 3px solid #fff;
+    }
+
+    .timeline-item.completed .timeline-icon {
+        background: var(--success-color);
+        color: #fff;
+    }
+
+    .timeline-item.active .timeline-icon {
+        background: var(--primary-color);
+        color: #fff;
+    }
+
+    .timeline-item.pending .timeline-icon {
+        background: var(--border-color);
+        color: var(--text-secondary);
+    }
+
+    .timeline-content {
+        background: var(--light-bg);
+        padding: 1.25rem;
+        border-radius: 0.75rem;
+    }
+
+    .timeline-title {
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 0.25rem;
+    }
+
+    .timeline-date {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .timeline-description {
+        color: var(--text-secondary);
+        margin: 0;
+        line-height: 1.6;
+    }
+
+    .status-badge {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 0.875rem;
+        margin-top: 0.5rem;
+    }
+
+    .status-badge.success {
+        background: rgba(16, 185, 129, 0.1);
+        color: var(--success-color);
+    }
+
+    .status-badge.warning {
+        background: rgba(245, 158, 11, 0.1);
+        color: var(--warning-color);
+    }
+
+    @media (max-width: 768px) {
+        .status-hero h1 {
+            font-size: 2rem;
+        }
+        .tracking-form {
+            padding: 2rem 1.5rem;
+        }
+        .input-group {
+            flex-direction: column;
+        }
+        .timeline-container {
+            padding: 2rem 1.5rem;
+        }
+    }
+</style>
+
+<section class="status-hero">
+    <div class="container">
+        <h1>Track Your Order</h1>
+        <p>Enter your order number to check the status</p>
+    </div>
+</section>
+
+<section class="status-content">
+    <div class="container">
+        <!-- Tracking Form -->
+        <div class="tracking-form">
+            <h2 class="form-title">Track Your Package</h2>
+            <form method="post">
+                {% csrf_token %}
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Enter Order Number (e.g., ORD-12345)" required>
+                    <button type="submit" class="btn-track">
+                        <i class="fas fa-search"></i> Track
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Timeline (Sample) -->
+        <div class="timeline-container">
+            <div class="order-header">
+                <div class="order-number">Order #ORD-12345</div>
+                <div class="order-date">Placed on October 15, 2025</div>
+                <span class="status-badge warning">In Transit</span>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item completed">
+                    <div class="timeline-icon">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Order Placed</div>
+                        <div class="timeline-date">Oct 15, 2025 - 10:30 AM</div>
+                        <p class="timeline-description">
+                            Your order has been received and confirmed. You will receive a confirmation email shortly.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline-item completed">
+                    <div class="timeline-icon">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Payment Confirmed</div>
+                        <div class="timeline-date">Oct 15, 2025 - 10:35 AM</div>
+                        <p class="timeline-description">
+                            Payment has been successfully processed. Order is being prepared for shipment.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline-item completed">
+                    <div class="timeline-icon">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Processing</div>
+                        <div class="timeline-date">Oct 16, 2025 - 9:00 AM</div>
+                        <p class="timeline-description">
+                            Your items are being picked and packed at our warehouse facility.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline-item active">
+                    <div class="timeline-icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Shipped</div>
+                        <div class="timeline-date">Oct 17, 2025 - 2:00 PM</div>
+                        <p class="timeline-description">
+                            Your package has been shipped and is on its way. Tracking number: TRK123456789
+                        </p>
+                        <span class="status-badge success">Current Status</span>
+                    </div>
+                </div>
+
+                <div class="timeline-item pending">
+                    <div class="timeline-icon">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Out for Delivery</div>
+                        <div class="timeline-date">Estimated: Oct 19, 2025</div>
+                        <p class="timeline-description">
+                            Your package is out for delivery and will arrive soon.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline-item pending">
+                    <div class="timeline-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Delivered</div>
+                        <div class="timeline-date">Estimated: Oct 19, 2025</div>
+                        <p class="timeline-description">
+                            Your order will be delivered to your address.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
