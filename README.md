@@ -1,8 +1,6 @@
 # VeloraKart - Django E-commerce Platform
 
-A full-featured e-commerce web application built with Django, offering a complete online shopping experience with user authentication, product management, shopping cart, and order processing.
-
-![Home Page](VeloraKart/screenshots/homePage.png)
+A robust e-commerce solution built with Django, providing a comprehensive online shopping experience with user authentication, product management, shopping cart functionality, and streamlined order processing.
 
 ## 🚀 Features
 
@@ -12,12 +10,6 @@ A full-featured e-commerce web application built with Django, offering a complet
 - **Password Management**: Change password functionality with validation
 - **User Dashboard**: Personalized dashboard for order history and account management
 
-![Login Page](VeloraKart/screenshots/loginPage.png)
-![Register Page](VeloraKart/screenshots/registerPage.png)
-![Dashboard](VeloraKart/screenshots/dashboardPage.png)
-![Edit Profile](VeloraKart/screenshots/editProfilePage.png)
-![Change Password](VeloraKart/screenshots/changePasswordPage.png)
-
 ### Product Management
 - **Product Catalog**: Browse products with detailed information
 - **Category-based Organization**: Products organized by categories
@@ -26,19 +18,12 @@ A full-featured e-commerce web application built with Django, offering a complet
 - **Product Reviews & Ratings**: Customer review system with star ratings
 - **Search & Filter**: Advanced product search and filtering options
 
-![Store Page](VeloraKart/screenshots/storePage.png)
-![Product Detail](VeloraKart/screenshots/productDetail.png)
-
 ### Shopping Cart & Checkout
 - **Shopping Cart**: Add/remove products with quantity management
 - **Product Variations**: Select size and color options
 - **Cart Persistence**: Cart items saved across sessions
 - **Secure Checkout**: Multi-step checkout process
 - **Order Summary**: Detailed order breakdown with tax calculations
-
-![Cart Items](VeloraKart/screenshots/cartItemsPage.png)
-![Checkout Page](VeloraKart/screenshots/checkoutPage.png)
-![Place Order](VeloraKart/screenshots/placeOrderPage.png)
 
 ### Payment & Order Management
 - **Payment Integration**: PayPal payment gateway integration
@@ -47,11 +32,7 @@ A full-featured e-commerce web application built with Django, offering a complet
 - **Invoice Generation**: PDF invoice generation for orders
 - **Order Status Tracking**: Track order status from placement to delivery
 
-![PayPal Payment](VeloraKart/screenshots/paypalPayment.png)
-![My Orders](VeloraKart/screenshots/myOrdersPage.png)
-![Invoice Page](VeloraKart/screenshots/invoicePage.png)
-
-### Admin Features
+### Administrative Features
 - **Product Management**: Add, edit, delete products
 - **Category Management**: Organize products by categories
 - **Order Management**: Process and track orders
@@ -394,6 +375,33 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - PayPal for payment processing integration
 - Font Awesome for icons
 
+## 📸 Project Snapshots
+
+### User Authentication
+| Login Page | Registration Page |
+|------------|-------------------|
+| ![Login Page](VeloraKart/screenshots/loginPage.png) | ![Register Page](VeloraKart/screenshots/registerPage.png) |
+
+### User Dashboard & Profile Management
+| Dashboard | Edit Profile | Change Password |
+|-----------|--------------|-----------------|
+| ![Dashboard](VeloraKart/screenshots/dashboardPage.png) | ![Edit Profile](VeloraKart/screenshots/editProfilePage.png) | ![Change Password](VeloraKart/screenshots/changePasswordPage.png) |
+
+### Shopping Experience
+| Home Page | Store Page | Product Detail |
+|-----------|------------|----------------|
+| ![Home Page](VeloraKart/screenshots/homePage.png) | ![Store Page](VeloraKart/screenshots/storePage.png) | ![Product Detail](VeloraKart/screenshots/productDetail.png) |
+
+### Cart & Checkout Process
+| Cart Items | Checkout Page | Place Order |
+|------------|---------------|-------------|
+| ![Cart Items](VeloraKart/screenshots/cartItemsPage.png) | ![Checkout Page](VeloraKart/screenshots/checkoutPage.png) | ![Place Order](VeloraKart/screenshots/placeOrderPage.png) |
+
+### Payment & Order Management
+| PayPal Payment | My Orders | Invoice Generation |
+|----------------|-----------|-------------------|
+| ![PayPal Payment](VeloraKart/screenshots/paypalPayment.png) | ![My Orders](VeloraKart/screenshots/myOrdersPage.png) | ![Invoice Page](VeloraKart/screenshots/invoicePage.png) |
+
 ---
 
-**VeloraKart** - Building the future of e-commerce, one cart at a time! 🛒✨
+**VeloraKart** - Professional e-commerce solutions for the modern digital marketplace.
